@@ -8,14 +8,15 @@ class ContactsController < ApplicationController
   end
 
   def show
-    render json: @contact
+    render json: @contact, include: %i[kind phones address]
   end
 
   def create
     @contact = Contact.new(contact_params)
 
     if @contact.save
-      render json: @contact, status: :created, location: @contact
+      render json: @contact, include: %i[kind phones address], status: :created,
+             location: @contact
     else
       render json: @contact.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class ContactsController < ApplicationController
 
   def update
     if @contact.update(contact_params)
-      render json: @contact
+      render json: @contact, include: %i[kind phones address]
     else
       render json: @contact.errors, status: :unprocessable_entity
     end
