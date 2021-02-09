@@ -36,6 +36,8 @@ class KindsController < ApplicationController
   private
 
   def set_kind
+    return @kind = Contact.find(params[:contact_id]).kind if params[:contact_id]
+
     @kind = Kind.find(params[:id])
   end
 

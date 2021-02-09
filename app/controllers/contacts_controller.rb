@@ -41,8 +41,8 @@ class ContactsController < ApplicationController
   end
 
   def contact_params
-    params.require(:contact).permit(:name, :email, :birthdate, :kind_id,
-                                    phones_attributes: %i[number id _destroy],
-                                    address_attributes: %i[id city street])
+    ActiveModelSerializers::Deserialization.jsonapi_parse(
+      params, only: %i[name email kind phone address]
+    )
   end
 end
