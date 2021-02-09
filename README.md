@@ -1,24 +1,24 @@
-# README
+# Desrcription
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+*This project was made to understand and practice the structure of an API developed using Ruby on Rails.*
 
-Things you may want to cover:
+The project ar using the gem [active_model_serializers](https://github.com/rails-api/active_model_serializers/) to adapt the protocols to be conform [jsonapi.org](https://jsonapi.org/) specifications.
 
-* Ruby version
+## Dependencies
 
-* System dependencies
+Ruby version 2.6.3
 
-* Configuration
+Rails version 6.0.3
 
-* Database creation
+## Geting started
 
-* Database initialization
+To configure the enviroment run de comand:
+```shell
+rails dev:setup
+```
+and the script will drop the database if it has already been created, create the database, run migrations and populate tables
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## Runing tests
 
-* Deployment instructions
-
-* ...
+########################################
