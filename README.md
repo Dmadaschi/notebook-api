@@ -2,7 +2,7 @@
 
 *This project was made to understand and practice the structure of an API developed using Ruby on Rails.*
 
-The project ar using the gem [active_model_serializers](https://github.com/rails-api/active_model_serializers/) to adapt the protocols to be conform [jsonapi.org](https://jsonapi.org/) specifications.
+The project is using the gem [active_model_serializers](https://github.com/rails-api/active_model_serializers/) adapting protocols to comply with the specifications of [jsonapi.org](https://jsonapi.org/).
 
 ## Dependencies
 
