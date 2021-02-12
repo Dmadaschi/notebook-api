@@ -10,8 +10,9 @@ gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Token based authentication for Rails JSON APIs. Designed to work with jToker and ng-token-auth.
-gem 'devise_token_auth'
 gem 'devise-i18n'
+
+gem 'devise_token_auth'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -29,6 +30,7 @@ gem 'rack-cors'
 # Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff
 gem 'rails-i18n', '~> 6.0.0'
 
+gem 'versionist'
 #ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers', '~> 0.10.2'
 
