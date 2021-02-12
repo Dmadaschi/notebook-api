@@ -31,9 +31,10 @@ gem 'rack-cors'
 gem 'rails-i18n', '~> 6.0.0'
 
 gem 'versionist'
-#ActiveModel::Serializer implementation and Rails hooks
+# ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers', '~> 0.10.2'
 
+gem 'kaminari'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

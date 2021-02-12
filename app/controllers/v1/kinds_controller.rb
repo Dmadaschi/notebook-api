@@ -3,7 +3,8 @@ module V1
     before_action :set_kind, only: %i[show update destroy]
 
     def index
-      @kinds = Kind.all
+      @kinds = Kind.all.page(params[:page].try(:[], :number))
+                   .per(params[:page].try(:[], :size))
 
       render json: @kinds
     end
