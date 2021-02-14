@@ -10,15 +10,14 @@ module V1
     end
 
     def show
-      render json: @contact, include: %i[kind phones address]
+      render json: @contact
     end
 
     def create
       @contact = Contact.new(contact_params)
 
       if @contact.save
-        render json: @contact, include: %i[kind phones address],
-               status: :created, location: @contact
+        render json: @contact, status: :created
       else
         render json: @contact.errors, status: :unprocessable_entity
       end
@@ -44,7 +43,7 @@ module V1
 
     def contact_params
       ActiveModelSerializers::Deserialization.jsonapi_parse(
-        params, only: %i[name email kind phone address]
+        params, only: %i[name email birthdate kind phone address]
       )
     end
   end
