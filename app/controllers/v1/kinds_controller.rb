@@ -17,7 +17,7 @@ module V1
       @kind = Kind.new(kind_params)
 
       if @kind.save
-        render json: @kind, status: :created, location: @kind
+        render json: @kind, status: :created
       else
         render json: @kind.errors, status: :unprocessable_entity
       end
@@ -44,7 +44,9 @@ module V1
     end
 
     def kind_params
-      params.require(:kind).permit(:description)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(
+        params, only: %i[description]
+      )
     end
   end
 end
