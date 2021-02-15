@@ -72,7 +72,7 @@ describe V1::ContactsController, type: :controller do
       }
 
       request.accept = 'application/vnd.api+json'
-      get :create, params: params
+      post :create, params: params
       contact = Contact.last
 
       expect(response).to have_http_status(:created)
@@ -80,6 +80,140 @@ describe V1::ContactsController, type: :controller do
       expect(contact.email).to eql('jose@jose.com.br')
       expect(I18n.l(contact.birthdate)).to eql('03/10/2010')
       expect(contact.kind).to eql(kind)
+    end
+    it 'with no params' do
+      request.accept = 'application/vnd.api+json'
+      post :create
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+    it 'with no kind' do
+      params = {
+        'data': {
+          'type': 'contacts',
+          'attributes': {
+            'name': 'José',
+            'email': 'jose@jose.com.br',
+            'birthdate': '03/10/2010'
+          }
+        }
+      }
+
+      request.accept = 'application/vnd.api+json'
+      post :create, params: params
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
+  context 'request update' do
+    it 'and update contact' do
+      kind = create(:contact)
+      contact = create(:contact, name: 'João', email: 'email@email.com.br',
+                                 birthdate: '10/10/2010')
+      params = {
+        'id': contact.id.to_s,
+        'data': {
+          'id': contact.id.to_s,
+          'type': 'contacts',
+          'attributes': {
+            'name': 'José',
+            'email': 'jose@jose.com.br',
+            'birthdate': '03/10/2010'
+          },
+          'relationships': {
+            'kind': {
+              'data': {
+                'id': kind.id.to_s,
+                'type': 'kinds'
+              }
+            }
+          }
+        }
+      }
+
+      request.accept = 'application/vnd.api+json'
+      patch :update, params: params
+      contact.reload
+
+      expect(response).to have_http_status(:ok)
+      expect(contact.name).to eql('José')
+      expect(contact.email).to eql('jose@jose.com.br')
+      expect(I18n.l(contact.birthdate)).to eql('03/10/2010')
+      expect(contact.kind_id).to eql(kind.id)
+    end
+    it 'with no contact' do
+      params = {
+        'id': '1',
+        'data': {
+          'type': 'contacts',
+          'attributes': {
+            'name': 'José',
+            'email': 'jose@jose.com.br',
+            'birthdate': '03/10/2010'
+          },
+          'relationships': {
+            'kind': {
+              'data': {
+                'id': '1',
+                'type': 'kinds'
+              }
+            }
+          }
+        }
+      }
+      request.accept = 'application/vnd.api+json'
+      patch :update, params: params
+
+      expect(response).to have_http_status(:not_found)
+    end
+    it 'with no kind' do
+      contact = create(:contact)
+      params = {
+        'id': contact.id.to_s,
+        'data': {
+          'id': contact.id.to_s,
+          'type': 'contacts',
+          'attributes': {
+            'name': 'José',
+            'email': 'jose@jose.com.br',
+            'birthdate': '03/10/2010'
+          },
+          'relationships': {
+            'kind': {
+              'data': {
+                'id': '',
+                'type': 'kinds'
+              }
+            }
+          }
+        }
+      }
+
+      request.accept = 'application/vnd.api+json'
+      patch :update, params: params
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+  context 'request destroy' do
+    before { Contact.destroy_all }
+    it 'and destroy contact' do
+      contact = create(:contact)
+
+      request.accept = 'application/vnd.api+json'
+      delete :destroy, params: { id: contact.id }
+
+      expect(response).to have_http_status(:ok)
+      expect(Contact.all.count).to eql(0)
+    end
+    it 'with no contact' do
+      contact = create(:contact)
+      request.accept = 'application/vnd.api+json'
+      delete :destroy, params: { id: (contact.id + 10) }
+
+      expect(response).to have_http_status(:not_found)
+      expect(Contact.last).to eql(contact)
     end
   end
 end

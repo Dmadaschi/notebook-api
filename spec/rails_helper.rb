@@ -6,6 +6,7 @@ SimpleCov.start 'rails' do
   add_filter 'app/jobs'
   add_filter 'app/channels'
   add_filter 'app/mailers'
+  add_filter 'lib'
 end
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production

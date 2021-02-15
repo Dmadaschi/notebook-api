@@ -33,6 +33,7 @@ module V1
 
     def destroy
       @contact.destroy
+      render json: nil, status: :ok
     end
 
     private
